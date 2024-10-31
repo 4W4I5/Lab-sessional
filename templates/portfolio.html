@@ -1,0 +1,63 @@
+{% extends "base.html" %} {% block title %} Portfolio of {{ portfolio.Fname }}
+{{ portfolio.Lname }} {% endblock %} {% block content %}
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-lg-4 text-center">
+      <!-- Profile Picture -->
+      <div class="card shadow-sm mb-4">
+        <div class="card-body">
+          <img
+            src="{{ url_for('static', path='uploads/' + portfolio.ProfilePicture.split('/')[-1]) }}"
+            alt="{{ portfolio.Fname }}'s Profile Picture"
+            class="img-fluid rounded-circle mb-3"
+            style="max-width: 200px"
+          />
+          <h2>{{ portfolio.Fname }} {{ portfolio.Lname }}</h2>
+        </div>
+      </div>
+
+      <!-- LinkedIn & GitHub -->
+      <div class="d-grid gap-2">
+        <a
+          href="{{ portfolio.LinkedIn }}"
+          target="_blank"
+          class="btn btn-outline-primary"
+        >
+          <i class="bi bi-linkedin"></i> LinkedIn Profile
+        </a>
+        <a
+          href="{{ portfolio.GitHub }}"
+          target="_blank"
+          class="btn btn-outline-dark"
+        >
+          <i class="bi bi-github"></i> GitHub Profile
+        </a>
+      </div>
+    </div>
+
+    <div class="col-lg-8">
+      <!-- Portfolio Details -->
+      <div class="card shadow-sm mb-4">
+        <div class="card-body">
+          <h3 class="card-title">About {{ portfolio.Fname }}</h3>
+          <p class="card-text"><strong>Email:</strong> {{ portfolio.Email }}</p>
+          <p class="card-text"><strong>Phone:</strong> {{ portfolio.Phone }}</p>
+          <p class="card-text"><strong>Bio:</strong> {{ portfolio.Bio }}</p>
+          <p class="card-text">
+            <strong>Skills:</strong> {{ portfolio.Skills }}
+          </p>
+        </div>
+      </div>
+
+      <!-- Download Buttons -->
+        <a
+          href="/download-portfolio/{{ portfolio.id }}"
+          class="btn btn-success btn-lg"
+        >
+          <i class="bi bi-download"></i> Download as PDF
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block title %}Download Portfolio{% endblock %}
+
+{% block content %}
+<div class="container mt-5 text-center">
+    <h2>Download Your Portfolio</h2>
+    <a href="/download-portfolio/{{ portfolio.id }}" class="btn btn-primary">Download Portfolio</a>
+</div>
+{% endblock %}

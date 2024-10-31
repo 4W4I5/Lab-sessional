@@ -1,0 +1,117 @@
+{% extends "base.html" %} {% block title %}Create Portfolio{% endblock %} {%
+block content %}
+<div class="container mt-5">
+  <h2>Create Your Portfolio</h2>
+  <form id="portfolioForm" enctype="multipart/form-data">
+    <!-- No need for hidden csrf token input here -->
+    <input type="hidden" name="_csrf" value="{{ csrf_token }}" />
+
+    <div class="form-group">
+      <label for="fname">First Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="fname"
+        name="fname"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="lname">Last Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="lname"
+        name="lname"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        name="email"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="phone">Phone</label>
+      <input
+        type="text"
+        class="form-control"
+        id="phone"
+        name="phone"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="bio">Short Bio</label>
+      <textarea
+        class="form-control"
+        id="bio"
+        name="bio"
+        rows="3"
+        required
+      ></textarea>
+    </div>
+    <div class="form-group">
+      <label for="skills">Skills or Expertise</label>
+      <input
+        type="text"
+        class="form-control"
+        id="skills"
+        name="skills"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="linkedin">LinkedIn Profile</label>
+      <input type="url" class="form-control" id="linkedin" name="linkedin" />
+    </div>
+    <div class="form-group">
+      <label for="github">GitHub Profile</label>
+      <input type="url" class="form-control" id="github" name="github" />
+    </div>
+    <div class="form-group">
+      <label for="profile_picture">Profile Picture</label>
+      <input
+        type="file"
+        class="form-control"
+        id="profile_picture"
+        name="profile_picture"
+        accept="image/*"
+        required
+      />
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+<script>
+  document.getElementById("portfolioForm").onsubmit = async function (event) {
+    event.preventDefault(); // Prevent default form submission
+
+    const form = event.target;
+    const formData = new FormData(form); // Collect form data
+
+    const csrfToken = "{{ csrf_token }}"; // Django CSRF token
+
+    const response = await fetch("/submit-portfolio/", {
+      method: "POST",
+      headers: {
+        "X-CSRF-Token": csrfToken, // Send CSRF token in header
+      },
+      body: formData, // Send form data in the body
+    });
+
+    if (response.ok) {
+      alert("Portfolio submitted successfully!");
+      form.reset(); // Optionally reset the form
+    } else {
+      alert("Failed to submit portfolio");
+    }
+  };
+</script>
+{% endblock %}
